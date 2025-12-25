@@ -1,0 +1,17 @@
+stateDiagram-v2
+    [*] --> Start
+
+    Start --> Playing: SPACE
+    Start --> [*]: ESC
+
+    Playing --> Paused: P
+    Paused --> Playing: P
+
+    Playing --> GameOver: Collision (wall/self)
+
+    GameOver --> Playing: R
+    GameOver --> Playing: SPACE
+    GameOver --> [*]: ESC
+
+    Playing --> [*]: ESC
+    Paused --> [*]: ESC
