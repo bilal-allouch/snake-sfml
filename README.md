@@ -1,5 +1,7 @@
 # 🐍 Snake SFML
 
+![Gameplay](assets/screenshots/gameplay.gif)
+
 Un jeu **Snake classique** développé en **C++ (C++17)** avec **SFML**, conçu autour d’une **architecture orientée objet claire** et d’une **séparation nette entre la logique du jeu et l’affichage graphique**.
 
 Ce projet met l’accent sur la **qualité du code**, la **modularité** et la **maintenabilité**, en respectant de bonnes pratiques d’ingénierie logicielle.
