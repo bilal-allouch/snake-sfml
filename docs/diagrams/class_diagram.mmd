@@ -2,29 +2,29 @@ classDiagram
 direction LR
 
 class Game {
-  -sf::RenderWindow& m_window
+  -RenderWindow m_window
   -Renderer m_renderer
   -Snake m_snake
   -Food m_food
-  -std::mt19937 m_rng
-  -sf::Font m_font
-  -sf::Text m_hudText
-  -sf::Text m_startText
-  -sf::Text m_pausedText
-  -sf::Text m_gameOverText
-  -sf::RectangleShape m_overlay
+  -RandomEngine m_rng
+  -Font m_font
+  -Text m_hudText
+  -Text m_startText
+  -Text m_pausedText
+  -Text m_gameOverText
+  -RectangleShape m_overlay
   -GameState m_state
   -int m_score
   -int m_applesEaten
-  -sf::Clock m_clock
-  -sf::Time m_accumulator
+  -Clock m_clock
+  -Time m_accumulator
   -int m_baseTickMs
   -int m_minTickMs
   -int m_msStep
-  +Game(sf::RenderWindow&)
+  +Game(RenderWindow)
   +run()
   -processEvents()
-  -update(sf::Time)
+  -update(Time)
   -render()
   -resetToStart()
   -startNewRun()
@@ -36,11 +36,11 @@ class Game {
 }
 
 class Renderer {
-  -sf::RenderWindow& m_window
-  -CELL_SIZE int
-  -GRID_WIDTH int
-  -GRID_HEIGHT int
-  +Renderer(sf::RenderWindow&)
+  -RenderWindow m_window
+  -int CELL_SIZE
+  -int GRID_WIDTH
+  -int GRID_HEIGHT
+  +Renderer(RenderWindow)
   +renderGrid()
   +renderSnake(Snake)
   +renderFood(Food)
@@ -50,33 +50,32 @@ class Renderer {
 }
 
 class Snake {
-  -std::vector~Cell~ m_body
+  -vector~Cell~ m_body
   -Direction m_dir
   -int m_grow
   +Snake()
   +reset()
-  +body() const std::vector~Cell~&
-  +head() const Cell&
+  +body() vector~Cell~
+  +head() Cell
   +setDirection(Direction)
-  +direction() const Direction
-  +nextHead() const Cell
+  +direction() Direction
+  +nextHead() Cell
   +move()
   +grow(int)
-  +contains(Cell) const bool
-  +isSelfColliding() const bool
+  +contains(Cell) bool
+  +isSelfColliding() bool
 }
 
 class Food {
   -Cell m_pos
   +Food()
-  +position() const Cell&
+  +position() Cell
   +setPosition(Cell)
 }
 
 class Cell {
   +int x
   +int y
-  +operator==(Cell) bool
 }
 
 class Direction {
@@ -100,9 +99,7 @@ Game --> Snake : owns
 Game --> Food : owns
 Renderer ..> Snake : renders
 Renderer ..> Food : renders
-Snake --> Cell : body cells
+Snake --> Cell : body
 Food --> Cell : position
-Snake ..> Direction : movement
-Game ..> GameState : state
-Game ..> sf::RenderWindow : window ref
-Renderer ..> sf::RenderWindow : window ref
+Snake ..> Direction
+Game ..> GameState
