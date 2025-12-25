@@ -1,0 +1,82 @@
+sequenceDiagram
+autonumber
+
+actor Player
+participant Win as RenderWindow
+participant Game
+participant Snake
+participant Food
+participant Renderer
+
+Note over Game: Main loop: processEvents -> update(dt) -> render()
+
+Player->>Win: KeyPressed (Arrows / P / R / SPACE)
+Win->>Game: pollEvent(event)
+Game->>Game: processEvents()
+
+alt State = Playing and Arrow key
+  Game->>Snake: setDirection(dir)
+end
+
+alt SPACE and State in {Start, GameOver}
+  Game->>Game: startNewRun()
+  Game->>Snake: reset()
+  Game->>Game: randomFreeCell()
+  Game->>Food: setPosition(cell)
+  Game->>Game: setState(Playing)
+end
+
+alt P pressed
+  Game->>Game: toggle state (Playing <-> Paused)
+end
+
+alt R pressed
+  Game->>Game: restart()
+  Game->>Snake: reset()
+  Game->>Game: randomFreeCell()
+  Game->>Food: setPosition(cell)
+  Game->>Game: setState(Playing)
+end
+
+Win->>Game: dt = clock.restart()
+Game->>Game: update(dt)
+
+alt State = Playing and accumulator >= tick
+  Game->>Snake: nextHead()
+  Game->>Game: isOutside(next)
+  alt outside = true
+    Game->>Game: setState(GameOver)
+  else outside = false
+    Game->>Snake: move()
+    Game->>Snake: isSelfColliding()
+    alt selfCollision = true
+      Game->>Game: setState(GameOver)
+    else selfCollision = false
+      Game->>Snake: head()
+      Game->>Food: position()
+      alt head == food
+        Game->>Game: eatApple()
+        Game->>Snake: grow(1)
+        Game->>Game: score += 10
+        Game->>Game: randomFreeCell()
+        Game->>Food: setPosition(newCell)
+      end
+    end
+  end
+end
+
+Game->>Game: render()
+Game->>Renderer: renderGrid()
+Game->>Renderer: renderFood(food)
+Game->>Renderer: renderSnake(snake)
+Game->>Win: draw(hud)
+
+alt State = Start
+  Game->>Win: draw(overlay + startText)
+else State = Paused
+  Game->>Win: draw(overlay + pausedText)
+else State = GameOver
+  Game->>Win: draw(overlay + gameOverText)
+end
+
+Game->>Win: display()
