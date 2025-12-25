@@ -113,6 +113,19 @@ Le projet inclut plusieurs diagrammes UML réalisés avec **Mermaid** afin de do
 
 ---
 
+## 📸 Screenshots
+
+### Start Screen
+![Start Screen](assets/screenshots/game_start.png)
+
+### Gameplay
+![Gameplay](assets/screenshots/gameplay.png)
+
+### Game Over
+![Game Over](assets/screenshots/game_over.png)
+
+---
+
 ## 🧩 Notes de développement
 
 * Développement progressif avec des commits Git fréquents et significatifs
