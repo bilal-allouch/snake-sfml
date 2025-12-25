@@ -12,7 +12,11 @@ public:
     void setDirection(Direction dir);
     Direction direction() const;
 
-    void move(); // avance d’une case dans la direction
+    Cell nextHead() const;       // calcule la prochaine tête
+    void move();                 // avance d’une case
+    bool isSelfColliding() const; // tête touche le corps ?
+
+    void reset(); // restart
 
 private:
     std::vector<Cell> m_body;

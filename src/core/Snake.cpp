@@ -1,6 +1,10 @@
 #include "core/Snake.hpp"
 
 Snake::Snake() {
+    reset();
+}
+
+void Snake::reset() {
     m_body = {
         {22, 15}, {21, 15}, {20, 15}, {19, 15}, {18, 15}
     };
@@ -16,7 +20,6 @@ const Cell& Snake::head() const {
 }
 
 void Snake::setDirection(Direction dir) {
-    // Empêche de faire demi-tour instantané (option pro)
     const bool isOpposite =
         (m_dir == Direction::Up    && dir == Direction::Down) ||
         (m_dir == Direction::Down  && dir == Direction::Up)   ||
@@ -32,19 +35,27 @@ Direction Snake::direction() const {
     return m_dir;
 }
 
-void Snake::move() {
+Cell Snake::nextHead() const {
     Cell next = head();
-
     switch (m_dir) {
         case Direction::Up:    next.y -= 1; break;
         case Direction::Down:  next.y += 1; break;
         case Direction::Left:  next.x -= 1; break;
         case Direction::Right: next.x += 1; break;
     }
+    return next;
+}
 
-    // Insère nouvelle tête
+void Snake::move() {
+    const Cell next = nextHead();
     m_body.insert(m_body.begin(), next);
-
-    // Retire la dernière case (pas de grow pour l’instant)
     m_body.pop_back();
+}
+
+bool Snake::isSelfColliding() const {
+    const Cell& h = head();
+    for (size_t i = 1; i < m_body.size(); ++i) {
+        if (m_body[i] == h) return true;
+    }
+    return false;
 }

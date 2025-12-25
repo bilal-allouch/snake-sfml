@@ -9,6 +9,11 @@ public:
     void renderGrid();
     void renderSnake(const Snake& snake);
 
+    int cellSize() const { return CELL_SIZE; }
+    int gridWidth() const { return GRID_WIDTH; }
+    int gridHeight() const { return GRID_HEIGHT; }
+
+
 private:
     sf::RenderWindow& m_window;
 
