@@ -8,6 +8,7 @@ add_executable(snake
     src/main.cpp
     src/graphics/Renderer.cpp
     src/core/Snake.cpp
+    src/core/Food.cpp
 )
 
 find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)

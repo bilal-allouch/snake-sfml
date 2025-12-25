@@ -1,6 +1,8 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "core/Snake.hpp"
+#include "core/Food.hpp"
+
 
 class Renderer {
 public:
@@ -12,6 +14,9 @@ public:
     int cellSize() const { return CELL_SIZE; }
     int gridWidth() const { return GRID_WIDTH; }
     int gridHeight() const { return GRID_HEIGHT; }
+
+    void renderFood(const Food& food);
+
 
 
 private:

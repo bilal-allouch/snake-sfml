@@ -12,13 +12,17 @@ public:
     void setDirection(Direction dir);
     Direction direction() const;
 
-    Cell nextHead() const;       // calcule la prochaine tête
-    void move();                 // avance d’une case
-    bool isSelfColliding() const; // tête touche le corps ?
+    Cell nextHead() const;
+    void move();
+    bool isSelfColliding() const;
 
-    void reset(); // restart
+    void grow(int amount = 1);  // +1 segment
+    bool contains(const Cell& c) const;
+
+    void reset();
 
 private:
     std::vector<Cell> m_body;
     Direction m_dir{Direction::Right};
+    int m_grow{0};
 };

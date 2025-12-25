@@ -39,3 +39,14 @@ void Renderer::renderSnake(const Snake& snake) {
         m_window.draw(segment);
     }
 }
+
+void Renderer::renderFood(const Food& food) {
+    sf::RectangleShape apple;
+    apple.setSize({CELL_SIZE - 2.f, CELL_SIZE - 2.f});
+    apple.setFillColor(sf::Color(230, 70, 80)); // rouge doux
+
+    const auto& p = food.position();
+    apple.setPosition(p.x * CELL_SIZE + 1.f, p.y * CELL_SIZE + 1.f);
+    m_window.draw(apple);
+}
+
