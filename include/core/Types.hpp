@@ -15,3 +15,11 @@ enum class Direction {
     Left,
     Right
 };
+
+enum class GameState {
+    Start,
+    Playing,
+    Paused,
+    GameOver
+};
+
